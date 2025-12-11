@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Games</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        background-color: #111;
+        color: #eee;
+    }
+
+    /* Sidebar */
+    #sidebar {
+        width: 240px;
+        background-color: #181818;
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        border-right: 2px solid #222;
+    }
+
+    #sidebar h2 {
+        margin-top: 0;
+        font-size: 22px;
+        color: #fff;
+    }
+
+    .game-link {
+        display: block;
+        padding: 12px;
+        margin: 6px 0;
+        background-color: #222;
+        text-decoration: none;
+        color: #ccc;
+        border-radius: 6px;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .game-link:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+    /* Main content */
+    #content {
+        flex-grow: 1;
+        background-color: #121212;
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <h2>Games</h2>
+    <a class="game-link" onclick="loadGame('cookieclicker.html')">Cookie Clicker Clone</a>
+</div>
+
+<!-- Game area -->
+<div id="content">
+    <iframe id="gameFrame" src=""></iframe>
+</div>
+
+<script>
+function loadGame(gameFile) {
+    document.getElementById("gameFrame").src = gameFile;
+}
+</script>
+
+</body>
+</html>
