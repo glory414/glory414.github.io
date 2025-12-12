@@ -29,24 +29,9 @@
         margin-top: 0;
         font-size: 22px;
         color: #fff;
-    }
-    
- /* Fullscreen button */
-    #fullscreenBtn {
-        background-color: #222;
-        color: #eee;
-        border: 2px solid #333;
-        padding: 10px;
-        margin-top: 20px;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.2s;
+        margin-bottom: 20px;
     }
 
-    #fullscreenBtn:hover {
-        background-color: #333;
-    }
-    
     .game-link {
         display: block;
         padding: 12px;
@@ -62,6 +47,23 @@
     .game-link:hover {
         background-color: #333;
         color: #fff;
+    }
+
+    /* Fullscreen button */
+    #fullscreenBtn {
+        background-color: #222;
+        color: #eee;
+        border: 2px solid #333;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s;
+        font-weight: bold;
+    }
+
+    #fullscreenBtn:hover {
+        background-color: #333;
     }
 
     /* Main content */
@@ -82,9 +84,8 @@
 <!-- Sidebar -->
 <div id="sidebar">
     <h2>Games</h2>
-    <a class="game-link" onclick="loadGame('vex3.html')">Vex 3</a>
-    
     <button id="fullscreenBtn">Fullscreen</button>
+    <a class="game-link" onclick="loadGame('vex3.html')">Vex 3</a>
 </div>
 
 <!-- Game area -->
