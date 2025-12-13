@@ -25,7 +25,7 @@
         border-right: 2px solid #222;
         display: flex;
         flex-direction: column;
-        overflow: hidden; /* 🔒 Prevent sidebar overflow */
+        overflow: hidden;
     }
 
     #sidebar h2 {
@@ -45,21 +45,19 @@
         outline: none;
     }
 
-    #searchBar:focus {
-        border-color: #555;
-    }
-
     .game-link {
         display: block;
         padding: 12px;
         margin: 6px 0;
         background-color: #222;
-        text-decoration: none;
         color: #ccc;
         border-radius: 6px;
-        transition: 0.2s;
         cursor: pointer;
+        transition: 0.2s;
         user-select: none;
+        border: none;
+        width: 100%;
+        text-align: left;
     }
 
     .game-link:hover {
@@ -67,14 +65,21 @@
         color: #fff;
     }
 
-    /* 🔽 SCROLLABLE GAME LIST */
-    #gameList {
-        flex-grow: 1;          /* fills remaining sidebar space */
-        overflow-y: auto;      /* enables scrolling */
-        padding-right: 5px;    /* space for scrollbar */
+    /* ✅ ACTIVE GAME HIGHLIGHT */
+    .game-link.active {
+        background-color: #3a3a3a;
+        color: #fff;
+        border-left: 4px solid #00ff99;
     }
 
-    /* Optional scrollbar styling */
+    /* Scrollable game list */
+    #gameList {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    /* Scrollbar styling */
     #gameList::-webkit-scrollbar {
         width: 8px;
     }
@@ -101,9 +106,7 @@
         margin-bottom: 20px;
         border-radius: 6px;
         cursor: pointer;
-        transition: 0.2s;
         font-weight: bold;
-        user-select: none;
     }
 
     #fullscreenBtn:hover {
@@ -127,7 +130,6 @@
 
 <body>
 
-<!-- Sidebar -->
 <div id="sidebar">
     <h2>Made by Marcel</h2>
 
@@ -135,7 +137,6 @@
 
     <button id="fullscreenBtn">Fullscreen</button>
 
-    <!-- 🔽 SCROLLABLE LIST -->
     <div id="gameList">
                <!-- A -->
         <a class="game-link" onclick="loadGame('adofai.html')">ADOFAI(not working)</a>
@@ -186,22 +187,38 @@
     </div>
 </div>
 
-<!-- Game container -->
 <div id="content">
     <iframe id="gameFrame"></iframe>
 </div>
 
 <script>
-function loadGame(gameFile) {
+function loadGame(gameFile, element) {
     document.getElementById("gameFrame").src = gameFile;
+    localStorage.setItem("activeGame", gameFile);
+
+    document.querySelectorAll(".game-link").forEach(game =>
+        game.classList.remove("active")
+    );
+
+    if (element) element.classList.add("active");
 }
 
-/* 🔍 LIVE SEARCH */
+/* Restore last played game */
+window.addEventListener("load", () => {
+    const lastGame = localStorage.getItem("activeGame");
+    if (!lastGame) return;
+
+    document.querySelectorAll(".game-link").forEach(game => {
+        if (game.getAttribute("onclick").includes(lastGame)) {
+            game.click();
+        }
+    });
+});
+
+/* Live search */
 document.getElementById("searchBar").addEventListener("input", function () {
     const filter = this.value.toLowerCase();
-    const games = document.querySelectorAll(".game-link");
-
-    games.forEach(game => {
+    document.querySelectorAll(".game-link").forEach(game => {
         game.style.display = game.textContent.toLowerCase().includes(filter)
             ? "block"
             : "none";
