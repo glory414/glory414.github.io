@@ -320,24 +320,20 @@ function checkPassword() {
     const error = document.getElementById("errorMsg");
 
     if (input === PASSWORD) {
-        localStorage.setItem("unlocked", "true");
         document.getElementById("lockScreen").style.display = "none";
+        error.textContent = "";
+        document.getElementById("passwordInput").value = "";
     } else {
         error.textContent = "Wrong password";
     }
 }
+
 
 function lockAgain() {
     localStorage.removeItem("unlocked");
     location.reload();
 }
 
-/* Auto unlock */
-window.addEventListener("load", () => {
-    if (localStorage.getItem("unlocked") === "true") {
-        document.getElementById("lockScreen").style.display = "none";
-    }
-});
 
 /* ============ GAME LOADER ============ */
 function loadGame(gameFile, element) {
