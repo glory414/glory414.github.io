@@ -24,10 +24,6 @@ body {
     justify-content: center;
     z-index: 9999;
 }
-    
-#lockBox * {
-    box-sizing: border-box;
-}
 
 #lockBox {
     background: #181818;
@@ -38,10 +34,6 @@ body {
     box-shadow: 0 0 30px rgba(0,0,0,0.6);
 }
 
-#lockBox h2 {
-    margin-bottom: 15px;
-}
-
 #lockBox input {
     width: 100%;
     padding: 12px;
@@ -50,7 +42,6 @@ body {
     border: 2px solid #333;
     color: #eee;
     border-radius: 6px;
-    outline: none;
 }
 
 #lockBox button {
@@ -64,10 +55,6 @@ body {
     cursor: pointer;
 }
 
-#lockBox button:hover {
-    background: #00cc77;
-}
-
 #errorMsg {
     color: #ff5555;
     margin-top: 10px;
@@ -77,20 +64,11 @@ body {
 /* ================= SIDEBAR ================= */
 #sidebar {
     width: 240px;
-    height: 100vh;
     background-color: #181818;
-    color: white;
     padding: 20px;
-    box-sizing: border-box;
     border-right: 2px solid #222;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-}
-
-#sidebar h2 {
-    margin: 0 0 15px 0;
-    font-size: 22px;
 }
 
 #searchBar {
@@ -100,8 +78,6 @@ body {
     border: 2px solid #333;
     background-color: #222;
     color: #eee;
-    font-size: 15px;
-    outline: none;
 }
 
 .game-link {
@@ -112,10 +88,7 @@ body {
     color: #ccc;
     border-radius: 6px;
     cursor: pointer;
-    transition: 0.2s;
-    user-select: none;
     border: none;
-    width: 100%;
     text-align: left;
 }
 
@@ -126,17 +99,16 @@ body {
 
 .game-link.active {
     background-color: #3a3a3a;
-    color: #fff;
     border-left: 4px solid #00ff99;
+    color: #fff;
 }
 
 #gameList {
     flex-grow: 1;
     overflow-y: auto;
-    padding-right: 5px;
 }
 
-#fullscreenBtn {
+.sidebar-btn {
     background-color: #222;
     color: #eee;
     border: 2px solid #333;
@@ -144,11 +116,6 @@ body {
     margin-bottom: 10px;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
-}
-
-#fullscreenBtn:hover {
-    background-color: #333;
 }
 
 /* ================= CONTENT ================= */
@@ -161,14 +128,13 @@ iframe {
     width: 100%;
     height: 100%;
     border: none;
-    background: black;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ============ LOCK SCREEN ============ -->
+<!-- LOCK SCREEN -->
 <div id="lockScreen">
     <div id="lockBox">
         <h2>Enter Password</h2>
@@ -178,190 +144,200 @@ iframe {
     </div>
 </div>
 
-<!-- ============ SIDEBAR ============ -->
+<!-- SIDEBAR -->
 <div id="sidebar">
     <h2>Made by Marcel</h2>
 
     <input type="text" id="searchBar" placeholder="Search games...">
 
-    <button id="fullscreenBtn">Fullscreen</button>
-    <button id="fullscreenBtn" onclick="lockAgain()">Lock</button>
+    <button class="sidebar-btn" id="fullscreenBtn">Fullscreen</button>
+    <button class="sidebar-btn" onclick="lockAgain()">Lock</button>
 
-    <div id="gameList">
-        <!-- A -->
-        <a class="game-link" onclick="loadGame('adofai.html')">ADOFAI(not working)</a>
-        <a class="game-link" onclick="loadGame('adarkroom.html')">A Dark Room(not working)</a>
-        <a class="game-link" onclick="loadGame('adcap.html')">Adventure Capatalist</a>
-        <a class="game-link" onclick="loadGame('ahoys.html')">Ahoy Survival</a>
-        <a class="game-link" onclick="loadGame('agario.html')">Agar.io</a>
-        <a class="game-link" onclick="loadGame('amazropepo.html')">Amazing Rope Police</a>
-        <a class="game-link" onclick="loadGame('amongus.html')">Among us</a>
-        <a class="game-link" onclick="loadGame('angrybirds.html')">Angry Birds</a>
-        <a class="game-link" onclick="loadGame('angrybirdsshow.html')">Angry Birds Showdown</a>
-        <a class="game-link" onclick="loadGame('aquapark.html')">Aqua Park</a>
-        <!-- B -->
-        <a class="game-link" onclick="loadGame('backr.html')">Backrooms</a>
-        <a class="game-link" onclick="loadGame('backr2d.html')">Backrooms 2D</a>
-        <a class="game-link" onclick="loadGame('badmonday.html')">Bad Monday Simulator</a>
-        <a class="game-link" onclick="loadGame('badp.html')">Bad Parenting</a>
-        <a class="game-link" onclick="loadGame('badtime.html')">Bad Time Simulator</a>
-        <a class="game-link" onclick="loadGame('baldi.html')">Baldi's Basics</a>
-        <a class="game-link" onclick="loadGame('baldire.html')">Baldi's Basics Remastered</a>
-        <a class="game-link" onclick="loadGame('bananasim.html')">Banana Simulator</a>
-        <a class="game-link" onclick="loadGame('bas.html')">BAS</a>
-        <a class="game-link" onclick="loadGame('basketran.html')">Basket Random</a>
-        <a class="game-link" onclick="loadGame('battlesim.html')">Battle Simulator</a>
-        <a class="game-link" onclick="loadGame('bergentruck.html')">Bergen Truck</a>
-        <a class="game-link" onclick="loadGame('bigicetowertsq.html')">Big Ice Tower Tiny Square</a>
-        <a class="game-link" onclick="loadGame('bigneontowertsq.html')">Big Neon Tower Tiny Square</a>
-        <a class="game-link" onclick="loadGame('bigtower1.html')">Big Tower Tiny Square(not working)</a>
-        <a class="game-link" onclick="loadGame('bigtower2.html')">Big Tower Tiny Square 2</a>
-        <a class="game-link" onclick="loadGame('bitlife.html')">Bitlife</a>
-        <a class="game-link" onclick="loadGame('blockblast.html')">Block Blast</a>
-        <a class="game-link" onclick="loadGame('bmaydie.html')">Bacon May die</a>
-        <a class="game-link" onclick="loadGame('bobtherobber2.html')">Bob The Robber 2</a>
-        <a class="game-link" onclick="loadGame('bouncemasters.html')">Bounce Masters</a>
-        <a class="game-link" onclick="loadGame('btd6.html')">BTD6</a>
-        <a class="game-link" onclick="loadGame('burritolaunch.html')">Burrito Launcher</a>
-        <!-- C -->
-        <a class="game-link" onclick="loadGame('capybaraclicker.html')">Capybara Clicker</a>
-        <a class="game-link" onclick="loadGame('catmario.html')">Cat Mario</a>
-        <a class="game-link" onclick="loadGame('circloo2.html')">CircloO 2</a>
-        <a class="game-link" onclick="loadGame('cookieclicker.html')">Cookie Clicker</a>
-        <a class="game-link" onclick="loadGame('coreball.html')">Coreball</a>
-        <a class="game-link" onclick="loadGame('crazycars.html')">Crazy Cars</a>
-        <a class="game-link" onclick="loadGame('crazycattle3d.html')">Crazy Cattle 3D</a>
-        <a class="game-link" onclick="loadGame('crazychicken3d.html')">Crazy Chicken 3D</a>
-        <a class="game-link" onclick="loadGame('crazymotorcycle.html')">Crazy Motorcycle</a>
-        <a class="game-link" onclick="loadGame('crossyroad.html')">Crossy Road</a>
-        <a class="game-link" onclick="loadGame('cs16.html')">CS 1.6</a>
-        <a class="game-link" onclick="loadGame('csgoclicker.html')">CSGO Clicker</a>
-        <a class="game-link" onclick="loadGame('cuttherope.html')">Cut The Rope</a>
-        <!-- D -->
-        <a class="game-link" onclick="loadGame('dedescent.html')">Deadly Descent</a>
-        <a class="game-link" onclick="loadGame('deltarune.html')">Deltarune</a>
-        <a class="game-link" onclick="loadGame('deltat.html')">Deltatravler</a>
-        <a class="game-link" onclick="loadGame('doblox.html')">Doblox</a>
-        <a class="game-link" onclick="loadGame('dogem.html')">Doge miner</a>
-        <a class="game-link" onclick="loadGame('dogem2.html')">Doge miner 2</a>
-        <a class="game-link" onclick="loadGame('hl2doom.html')">Doom(but half life)</a>
-        <a class="game-link" onclick="loadGame('doomzio.html')">Doomz.io</a>
-        <a class="game-link" onclick="loadGame('driftboss.html')">Drift Boss</a>
-        <a class="game-link" onclick="loadGame('dlspace.html')">Duck Life Space</a>
-        <a class="game-link" onclick="loadGame('dlbattle.html')">Duck Life Battle</a>
-        <a class="game-link" onclick="loadGame('dungeondeck.html')">Dungeon Deck</a>
-        <!-- E -->
-        <a class="game-link" onclick="loadGame('eagleride.html')">Eagle Ride</a>
-        <a class="game-link" onclick="loadGame('edyscarsim.html')">Edy's Car Simulator</a>
-        <a class="game-link" onclick="loadGame('egg.html')">Egg</a>
-        <a class="game-link" onclick="loadGame('eggycar.html')">Eggy Car</a>
-        <a class="game-link" onclick="loadGame('exrun3d.html')">Extreme run 3D</a>
-        <!-- F -->
-        <a class="game-link" onclick="loadGame('fireblob.html')">Fire Blob</a>
-        <a class="game-link" onclick="loadGame('fbawg2.html')">Fire Boy and Water Girl 2</a>
-        <a class="game-link" onclick="loadGame('fbawg3.html')">Fire Boy and Water Girl 3</a>
-        <a class="game-link" onclick="loadGame('fisheatgetbig.html')">Fish Eat Getting Big</a>
-        <a class="game-link" onclick="loadGame('fnac1.html')">Five Nights At Candy</a>
-        <a class="game-link" onclick="loadGame('fnac2.html')">Five Nights At Candy</a>
-        <a class="game-link" onclick="loadGame('fnab.html')">Five Nights At Baldi's</a>
-        <a class="game-link" onclick="loadGame('fnaf.html')">FNAF</a>
-        <a class="game-link" onclick="loadGame('fnaf2.html')">FNAF 2</a>
-        <a class="game-link" onclick="loadGame('fnaf3.html')">FNAF 3</a>
-        <a class="game-link" onclick="loadGame('fnaf4.html')">FNAF 4</a>
-        <a class="game-link" onclick="loadGame('fnaf4hall.html')">FNAF 4 Halloween</a>
-        <a class="game-link" onclick="loadGame('fnafpizza.html')">FNAF Pizzeria Simulator</a>
-        <a class="game-link" onclick="loadGame('fnafucnight.html')">FNAF Ultimate Custom Night</a>
-        <a class="game-link" onclick="loadGame('fnafsis.html')">FNAF Sister Location</a>
-        <a class="game-link" onclick="loadGame('forknsaus.html')">Fork and Sausage</a>
-        <a class="game-link" onclick="loadGame('fruitninja.html')">Fruit Ninja</a>
-        <a class="game-link" onclick="loadGame('funnyshooter2.html')">Funny Shooter 2</a>
-        <!-- G -->
-        <a class="game-link" onclick="loadGame('genericfight.html')">Generic Fight Simulator</a>
-        <a class="game-link" onclick="loadGame('gdlite.html')">GD Lite</a>
-        <a class="game-link" onclick="loadGame('gdscratch.html')">GD Scratch</a>
-        <a class="game-link" onclick="loadGame('geovibes.html')">Geometry Vibes</a>
-        <a class="game-link" onclick="loadGame('gimmietheairpod.html')">Gimme the airpod</a>
-        <a class="game-link" onclick="loadGame('goingballs.html')">Going Balls</a>
-        <a class="game-link" onclick="loadGame('golddigger.html')">Gold Digger</a>
-        <a class="game-link" onclick="loadGame('goldminer.html')">Gold Miner</a>
-        <a class="game-link" onclick="loadGame('golf.html')">Golf</a>
-        <a class="game-link" onclick="loadGame('gasny.html')">Grand Action Simulator: New York</a>
-        <a class="game-link" onclick="loadGame('granny.html')">Granny</a>
-        <a class="game-link" onclick="loadGame('granny2.html')">Ganny 2</a>
-        <a class="game-link" onclick="loadGame('granny3.html')">Granny 3</a>
-        <a class="game-link" onclick="loadGame('gravity.html')">Gravity</a>
-        <a class="game-link" onclick="loadGame('grindcraft.html')">GrindCraft</a>
-        <a class="game-link" onclick="loadGame('growagarden.html')">Grow A Garden</a>
-        <a class="game-link" onclick="loadGame('growyourgarden.html')">Grow Your Garden</a>
-        <!-- V -->
-        <a class="game-link" onclick="loadGame('vex3.html')">Vex 3</a>
-        <a class="game-link" onclick="loadGame('vex3xmas.html')">Vex 3 Xmas</a>
-        <a class="game-link" onclick="loadGame('vex4.html')">Vex 4 (not working)</a>
-        <a class="game-link" onclick="loadGame('vex5.html')">Vex 5 (not working)</a>
-        <a class="game-link" onclick="loadGame('vex6.html')">Vex 6</a>
-        <a class="game-link" onclick="loadGame('vex7.html')">Vex 7</a>
-        <a class="game-link" onclick="loadGame('vex8.html')">Vex 8</a>
-        <a class="game-link" onclick="loadGame('vexch.html')">Vex Challenges</a>
-        <a class="game-link" onclick="loadGame('vexx3m.html')">Vex X3M</a>
-        <a class="game-link" onclick="loadGame('vexx3m2.html')">Vex X3M 2</a>
-    </div>
+   <div id="gameList">
+
+    <!-- A -->
+    <a class="game-link" onclick="loadGame('adofai.html', this)">ADOFAI (not working)</a>
+    <a class="game-link" onclick="loadGame('adarkroom.html', this)">A Dark Room (not working)</a>
+    <a class="game-link" onclick="loadGame('adcap.html', this)">Adventure Capitalist</a>
+    <a class="game-link" onclick="loadGame('ahoys.html', this)">Ahoy Survival</a>
+    <a class="game-link" onclick="loadGame('agario.html', this)">Agar.io</a>
+    <a class="game-link" onclick="loadGame('amazropepo.html', this)">Amazing Rope Police</a>
+    <a class="game-link" onclick="loadGame('amongus.html', this)">Among Us</a>
+    <a class="game-link" onclick="loadGame('angrybirds.html', this)">Angry Birds</a>
+    <a class="game-link" onclick="loadGame('angrybirdsshow.html', this)">Angry Birds Showdown</a>
+    <a class="game-link" onclick="loadGame('aquapark.html', this)">Aqua Park</a>
+
+    <!-- B -->
+    <a class="game-link" onclick="loadGame('backr.html', this)">Backrooms</a>
+    <a class="game-link" onclick="loadGame('backr2d.html', this)">Backrooms 2D</a>
+    <a class="game-link" onclick="loadGame('badmonday.html', this)">Bad Monday Simulator</a>
+    <a class="game-link" onclick="loadGame('badp.html', this)">Bad Parenting</a>
+    <a class="game-link" onclick="loadGame('badtime.html', this)">Bad Time Simulator</a>
+    <a class="game-link" onclick="loadGame('baldi.html', this)">Baldi's Basics</a>
+    <a class="game-link" onclick="loadGame('baldire.html', this)">Baldi's Basics Remastered</a>
+    <a class="game-link" onclick="loadGame('bananasim.html', this)">Banana Simulator</a>
+    <a class="game-link" onclick="loadGame('bas.html', this)">BAS</a>
+    <a class="game-link" onclick="loadGame('basketran.html', this)">Basket Random</a>
+    <a class="game-link" onclick="loadGame('battlesim.html', this)">Battle Simulator</a>
+    <a class="game-link" onclick="loadGame('bergentruck.html', this)">Bergen Truck</a>
+    <a class="game-link" onclick="loadGame('bigicetowertsq.html', this)">Big Ice Tower Tiny Square</a>
+    <a class="game-link" onclick="loadGame('bigneontowertsq.html', this)">Big Neon Tower Tiny Square</a>
+    <a class="game-link" onclick="loadGame('bigtower1.html', this)">Big Tower Tiny Square (not working)</a>
+    <a class="game-link" onclick="loadGame('bigtower2.html', this)">Big Tower Tiny Square 2</a>
+    <a class="game-link" onclick="loadGame('bitlife.html', this)">BitLife</a>
+    <a class="game-link" onclick="loadGame('blockblast.html', this)">Block Blast</a>
+    <a class="game-link" onclick="loadGame('bmaydie.html', this)">Bacon May Die</a>
+    <a class="game-link" onclick="loadGame('bobtherobber2.html', this)">Bob the Robber 2</a>
+    <a class="game-link" onclick="loadGame('bouncemasters.html', this)">Bounce Masters</a>
+    <a class="game-link" onclick="loadGame('btd6.html', this)">BTD 6</a>
+    <a class="game-link" onclick="loadGame('burritolaunch.html', this)">Burrito Launcher</a>
+
+    <!-- C -->
+    <a class="game-link" onclick="loadGame('capybaraclicker.html', this)">Capybara Clicker</a>
+    <a class="game-link" onclick="loadGame('catmario.html', this)">Cat Mario</a>
+    <a class="game-link" onclick="loadGame('circloo2.html', this)">CircloO 2</a>
+    <a class="game-link" onclick="loadGame('cookieclicker.html', this)">Cookie Clicker</a>
+    <a class="game-link" onclick="loadGame('coreball.html', this)">Coreball</a>
+    <a class="game-link" onclick="loadGame('crazycars.html', this)">Crazy Cars</a>
+    <a class="game-link" onclick="loadGame('crazycattle3d.html', this)">Crazy Cattle 3D</a>
+    <a class="game-link" onclick="loadGame('crazychicken3d.html', this)">Crazy Chicken 3D</a>
+    <a class="game-link" onclick="loadGame('crazymotorcycle.html', this)">Crazy Motorcycle</a>
+    <a class="game-link" onclick="loadGame('crossyroad.html', this)">Crossy Road</a>
+    <a class="game-link" onclick="loadGame('cs16.html', this)">CS 1.6</a>
+    <a class="game-link" onclick="loadGame('csgoclicker.html', this)">CSGO Clicker</a>
+    <a class="game-link" onclick="loadGame('cuttherope.html', this)">Cut the Rope</a>
+
+    <!-- D -->
+    <a class="game-link" onclick="loadGame('dedescent.html', this)">Deadly Descent</a>
+    <a class="game-link" onclick="loadGame('deltarune.html', this)">Deltarune</a>
+    <a class="game-link" onclick="loadGame('deltat.html', this)">Deltatraveler</a>
+    <a class="game-link" onclick="loadGame('doblox.html', this)">Doblox</a>
+    <a class="game-link" onclick="loadGame('dogem.html', this)">Doge Miner</a>
+    <a class="game-link" onclick="loadGame('dogem2.html', this)">Doge Miner 2</a>
+    <a class="game-link" onclick="loadGame('hl2doom.html', this)">Doom (Half-Life)</a>
+    <a class="game-link" onclick="loadGame('doomzio.html', this)">Doomz.io</a>
+    <a class="game-link" onclick="loadGame('driftboss.html', this)">Drift Boss</a>
+    <a class="game-link" onclick="loadGame('dlspace.html', this)">Duck Life Space</a>
+    <a class="game-link" onclick="loadGame('dlbattle.html', this)">Duck Life Battle</a>
+    <a class="game-link" onclick="loadGame('dungeondeck.html', this)">Dungeon Deck</a>
+
+    <!-- E -->
+    <a class="game-link" onclick="loadGame('eagleride.html', this)">Eagle Ride</a>
+    <a class="game-link" onclick="loadGame('edyscarsim.html', this)">Edy’s Car Simulator</a>
+    <a class="game-link" onclick="loadGame('egg.html', this)">Egg</a>
+    <a class="game-link" onclick="loadGame('eggycar.html', this)">Eggy Car</a>
+    <a class="game-link" onclick="loadGame('exrun3d.html', this)">Extreme Run 3D</a>
+
+    <!-- F -->
+    <a class="game-link" onclick="loadGame('fireblob.html', this)">Fire Blob</a>
+    <a class="game-link" onclick="loadGame('fbawg2.html', this)">Fireboy & Watergirl 2</a>
+    <a class="game-link" onclick="loadGame('fbawg3.html', this)">Fireboy & Watergirl 3</a>
+    <a class="game-link" onclick="loadGame('fisheatgetbig.html', this)">Fish Eat Getting Big</a>
+    <a class="game-link" onclick="loadGame('fnac1.html', this)">Five Nights at Candy’s</a>
+    <a class="game-link" onclick="loadGame('fnac2.html', this)">Five Nights at Candy’s 2</a>
+    <a class="game-link" onclick="loadGame('fnab.html', this)">Five Nights at Baldi’s</a>
+    <a class="game-link" onclick="loadGame('fnaf.html', this)">FNAF</a>
+    <a class="game-link" onclick="loadGame('fnaf2.html', this)">FNAF 2</a>
+    <a class="game-link" onclick="loadGame('fnaf3.html', this)">FNAF 3</a>
+    <a class="game-link" onclick="loadGame('fnaf4.html', this)">FNAF 4</a>
+    <a class="game-link" onclick="loadGame('fnaf4hall.html', this)">FNAF 4 Halloween</a>
+    <a class="game-link" onclick="loadGame('fnafpizza.html', this)">FNAF Pizzeria Simulator</a>
+    <a class="game-link" onclick="loadGame('fnafucnight.html', this)">FNAF Ultimate Custom Night</a>
+    <a class="game-link" onclick="loadGame('fnafsis.html', this)">FNAF Sister Location</a>
+    <a class="game-link" onclick="loadGame('forknsaus.html', this)">Fork & Sausage</a>
+    <a class="game-link" onclick="loadGame('fruitninja.html', this)">Fruit Ninja</a>
+    <a class="game-link" onclick="loadGame('funnyshooter2.html', this)">Funny Shooter 2</a>
+
+    <!-- G -->
+    <a class="game-link" onclick="loadGame('genericfight.html', this)">Generic Fight Simulator</a>
+    <a class="game-link" onclick="loadGame('gdlite.html', this)">GD Lite</a>
+    <a class="game-link" onclick="loadGame('gdscratch.html', this)">GD Scratch</a>
+    <a class="game-link" onclick="loadGame('geovibes.html', this)">Geometry Vibes</a>
+    <a class="game-link" onclick="loadGame('gimmietheairpod.html', this)">Gimme the AirPod</a>
+    <a class="game-link" onclick="loadGame('goingballs.html', this)">Going Balls</a>
+    <a class="game-link" onclick="loadGame('golddigger.html', this)">Gold Digger</a>
+    <a class="game-link" onclick="loadGame('goldminer.html', this)">Gold Miner</a>
+    <a class="game-link" onclick="loadGame('golf.html', this)">Golf</a>
+    <a class="game-link" onclick="loadGame('gasny.html', this)">Grand Action Simulator: New York</a>
+    <a class="game-link" onclick="loadGame('granny.html', this)">Granny</a>
+    <a class="game-link" onclick="loadGame('granny2.html', this)">Granny 2</a>
+    <a class="game-link" onclick="loadGame('granny3.html', this)">Granny 3</a>
+    <a class="game-link" onclick="loadGame('gravity.html', this)">Gravity</a>
+    <a class="game-link" onclick="loadGame('grindcraft.html', this)">GrindCraft</a>
+    <a class="game-link" onclick="loadGame('growagarden.html', this)">Grow a Garden</a>
+    <a class="game-link" onclick="loadGame('growyourgarden.html', this)">Grow Your Garden</a>
+
+    <!-- V -->
+    <a class="game-link" onclick="loadGame('vex3.html', this)">Vex 3</a>
+    <a class="game-link" onclick="loadGame('vex3xmas.html', this)">Vex 3 Xmas</a>
+    <a class="game-link" onclick="loadGame('vex4.html', this)">Vex 4 (not working)</a>
+    <a class="game-link" onclick="loadGame('vex5.html', this)">Vex 5 (not working)</a>
+    <a class="game-link" onclick="loadGame('vex6.html', this)">Vex 6</a>
+    <a class="game-link" onclick="loadGame('vex7.html', this)">Vex 7</a>
+    <a class="game-link" onclick="loadGame('vex8.html', this)">Vex 8</a>
+    <a class="game-link" onclick="loadGame('vexch.html', this)">Vex Challenges</a>
+    <a class="game-link" onclick="loadGame('vexx3m.html', this)">Vex X3M</a>
+    <a class="game-link" onclick="loadGame('vexx3m2.html', this)">Vex X3M 2</a>
+
 </div>
 
+<!-- CONTENT -->
 <div id="content">
     <iframe id="gameFrame" allowfullscreen></iframe>
 </div>
 
 <script>
-/* ============ PASSWORD ============ */
-const PASSWORD = "j0hn6789"; // 🔴 CHANGE THIS
+/* ================= PASSWORD ================= */
+// ⚠️ Client-side only (not real security)
+const PASSWORD = "j0hn6789";
 
 function checkPassword() {
-    const input = document.getElementById("passwordInput").value;
-    const error = document.getElementById("errorMsg");
-
+    const input = passwordInput.value;
     if (input === PASSWORD) {
-        document.getElementById("lockScreen").style.display = "none";
-        error.textContent = "";
-        document.getElementById("passwordInput").value = "";
+        localStorage.setItem("unlocked", "true");
+        lockScreen.style.display = "none";
+        passwordInput.value = "";
+        errorMsg.textContent = "";
     } else {
-        error.textContent = "Email me at marcelm7344@gmail.com for any questions. You also got the password wrong.";
+        errorMsg.textContent = "Incorrect password. Contact marcelm7344@gmail.com";
     }
 }
 
+passwordInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") checkPassword();
+});
 
 function lockAgain() {
     localStorage.removeItem("unlocked");
     location.reload();
 }
 
-
-/* ============ GAME LOADER ============ */
+/* ================= GAME LOADER ================= */
 function loadGame(gameFile, element) {
-    const frame = document.getElementById("gameFrame");
-    frame.src = gameFile;
+    gameFrame.src = gameFile;
     localStorage.setItem("activeGame", gameFile);
 
-    document.querySelectorAll(".game-link").forEach(game =>
-        game.classList.remove("active")
-    );
+    document.querySelectorAll(".game-link")
+        .forEach(g => g.classList.remove("active"));
 
-    if (element) element.classList.add("active");
+    element.classList.add("active");
 }
 
-/* Restore last game */
+/* Restore state */
 window.addEventListener("load", () => {
-    const lastGame = localStorage.getItem("activeGame");
-    if (!lastGame) return;
+    if (localStorage.getItem("unlocked") === "true") {
+        lockScreen.style.display = "none";
+    }
 
-    document.querySelectorAll(".game-link").forEach(game => {
-        if (game.getAttribute("onclick").includes(lastGame)) {
-            loadGame(lastGame, game);
-        }
-    });
+    const lastGame = localStorage.getItem("activeGame") || "adcap.html";
+    const link = [...document.querySelectorAll(".game-link")]
+        .find(a => a.getAttribute("onclick").includes(lastGame));
+
+    if (link) loadGame(lastGame, link);
 });
 
-/* Live search */
-document.getElementById("searchBar").addEventListener("input", function () {
+/* Search */
+searchBar.addEventListener("input", function () {
     const filter = this.value.toLowerCase();
     document.querySelectorAll(".game-link").forEach(game => {
         game.style.display = game.textContent.toLowerCase().includes(filter)
@@ -371,12 +347,10 @@ document.getElementById("searchBar").addEventListener("input", function () {
 });
 
 /* Fullscreen */
-document.getElementById("fullscreenBtn").addEventListener("click", () => {
-    const frame = document.getElementById("gameFrame");
-    if (frame.requestFullscreen) frame.requestFullscreen();
+fullscreenBtn.addEventListener("click", () => {
+    document.documentElement.requestFullscreen();
 });
 </script>
 
 </body>
 </html>
-
