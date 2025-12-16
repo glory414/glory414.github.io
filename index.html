@@ -312,7 +312,7 @@ iframe {
 </div>
 
 <script>
-/* ============ PASSWORD ============ */
+/* ================= PASSWORD & LOCK SCREEN ================= */
 const PASSWORD = "j0hn6789"; // 🔴 CHANGE THIS
 
 function checkPassword() {
@@ -320,6 +320,7 @@ function checkPassword() {
     const error = document.getElementById("errorMsg");
 
     if (input === PASSWORD) {
+        localStorage.setItem("unlocked", "true"); // persist unlock
         document.getElementById("lockScreen").style.display = "none";
         error.textContent = "";
         document.getElementById("passwordInput").value = "";
@@ -328,39 +329,52 @@ function checkPassword() {
     }
 }
 
-
 function lockAgain() {
     localStorage.removeItem("unlocked");
     location.reload();
 }
 
+// Hide lock screen if already unlocked
+window.addEventListener("load", () => {
+    if (localStorage.getItem("unlocked") === "true") {
+        document.getElementById("lockScreen").style.display = "none";
+    }
+});
 
-/* ============ GAME LOADER ============ */
+/* ================= GAME LOADER ================= */
+const volumeSlider = document.getElementById("volumeSlider");
+
 function loadGame(gameFile, element) {
     const frame = document.getElementById("gameFrame");
     frame.src = gameFile;
     localStorage.setItem("activeGame", gameFile);
 
+    // Highlight active game
     document.querySelectorAll(".game-link").forEach(game =>
         game.classList.remove("active")
     );
-
     if (element) element.classList.add("active");
+
+    // Set volume after iframe loads
+    frame.onload = () => {
+        const volume = volumeSlider.value / 100;
+        setIframeVolume(volume);
+    };
 }
 
-/* Restore last game */
+// Restore last game on page load
 window.addEventListener("load", () => {
     const lastGame = localStorage.getItem("activeGame");
     if (!lastGame) return;
 
     document.querySelectorAll(".game-link").forEach(game => {
-        if (game.getAttribute("onclick").includes(lastGame)) {
+        if (game.getAttribute("onclick") && game.getAttribute("onclick").includes(lastGame)) {
             loadGame(lastGame, game);
         }
     });
 });
 
-/* Live search */
+/* ================= SEARCH ================= */
 document.getElementById("searchBar").addEventListener("input", function () {
     const filter = this.value.toLowerCase();
     document.querySelectorAll(".game-link").forEach(game => {
@@ -370,12 +384,43 @@ document.getElementById("searchBar").addEventListener("input", function () {
     });
 });
 
-/* Fullscreen */
+/* ================= FULLSCREEN ================= */
 document.getElementById("fullscreenBtn").addEventListener("click", () => {
     const frame = document.getElementById("gameFrame");
     if (frame.requestFullscreen) frame.requestFullscreen();
 });
+
+/* ================= VOLUME SLIDER ================= */
+// Restore saved volume
+window.addEventListener("load", () => {
+    const savedVolume = localStorage.getItem("volume");
+    if (savedVolume !== null) {
+        volumeSlider.value = savedVolume;
+        setIframeVolume(savedVolume / 100);
+    }
+});
+
+// Update volume when slider changes
+volumeSlider.addEventListener("input", () => {
+    const volume = volumeSlider.value / 100;
+    localStorage.setItem("volume", volumeSlider.value);
+    setIframeVolume(volume);
+});
+
+// Function to set iframe audio volume
+function setIframeVolume(volume) {
+    const frame = document.getElementById("gameFrame");
+    try {
+        const audios = frame.contentWindow.document.getElementsByTagName("audio");
+        for (let audio of audios) {
+            audio.volume = volume;
+        }
+    } catch (e) {
+        console.warn("Cannot access iframe audio due to cross-origin restrictions");
+    }
+}
 </script>
+
 
 </body>
 </html>
