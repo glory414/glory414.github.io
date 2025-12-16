@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WORK IN PROGRESS</title>
+<title>Game Portal</title>
 
 <style>
 body {
@@ -14,7 +14,7 @@ body {
     color: #eee;
 }
 
-/* ================= LOCK SCREEN ================= */
+/* ========== LOCK SCREEN ========== */
 #lockScreen {
     position: fixed;
     inset: 0;
@@ -23,10 +23,6 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 9999;
-}
-
-#lockBox * {
-    box-sizing: border-box;
 }
 
 #lockBox {
@@ -74,18 +70,16 @@ body {
     font-size: 14px;
 }
 
-/* ================= SIDEBAR ================= */
+/* ========== SIDEBAR ========== */
 #sidebar {
     width: 240px;
     height: 100vh;
     background-color: #181818;
-    color: white;
     padding: 20px;
     box-sizing: border-box;
     border-right: 2px solid #222;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 #sidebar h2 {
@@ -104,73 +98,6 @@ body {
     outline: none;
 }
 
-/* Sidebar controls */
-#sidebarControls {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-#sidebarControls button {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    background-color: #222;
-    color: #eee;
-    border: 2px solid #333;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-#sidebarControls button:hover {
-    background-color: #333;
-}
-
-/* Volume slider */
-.volume-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-}
-
-.volume-container label {
-    font-size: 14px;
-    color: #ccc;
-    margin-bottom: 5px;
-}
-
-#volumeSlider {
-    width: 100%;
-    -webkit-appearance: none;
-    height: 6px;
-    border-radius: 5px;
-    background: #222;
-    outline: none;
-    cursor: pointer;
-}
-
-#volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    background: #00ff99;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-}
-
-#volumeSlider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    background: #00ff99;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-}
-
-/* Game list */
 .game-link {
     display: block;
     padding: 12px;
@@ -180,10 +107,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s;
-    user-select: none;
-    border: none;
-    width: 100%;
-    text-align: left;
+    text-decoration: none;
 }
 
 .game-link:hover {
@@ -203,7 +127,22 @@ body {
     padding-right: 5px;
 }
 
-/* ================= CONTENT ================= */
+#fullscreenBtn {
+    background-color: #222;
+    color: #eee;
+    border: 2px solid #333;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#fullscreenBtn:hover {
+    background-color: #333;
+}
+
+/* ========== CONTENT ========== */
 #content {
     flex-grow: 1;
     background-color: #121212;
@@ -220,7 +159,7 @@ iframe {
 
 <body>
 
-<!-- ============ LOCK SCREEN ============ -->
+<!-- ========== LOCK SCREEN ========== -->
 <div id="lockScreen">
     <div id="lockBox">
         <h2>Enter Password</h2>
@@ -230,21 +169,12 @@ iframe {
     </div>
 </div>
 
-<!-- ============ SIDEBAR ============ -->
+<!-- ========== SIDEBAR ========== -->
 <div id="sidebar">
     <h2>Made by Marcel</h2>
 
     <input type="text" id="searchBar" placeholder="Search games...">
-
-    <div id="sidebarControls">
-        <button id="fullscreenBtn">Fullscreen</button>
-        <button id="lockBtn" onclick="lockAgain()">Lock</button>
-
-        <div class="volume-container">
-            <label for="volumeSlider">Volume</label>
-            <input type="range" id="volumeSlider" min="0" max="100" value="100">
-        </div>
-    </div>
+    <button id="fullscreenBtn">Fullscreen</button>
 
     <div id="gameList">
  <!-- A -->
@@ -371,15 +301,14 @@ iframe {
 </div>
 
 <script>
-/* ================= PASSWORD & LOCK SCREEN ================= */
 const PASSWORD = "j0hn6789";
 
+/* ========== PASSWORD CHECK ========== */
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
     const error = document.getElementById("errorMsg");
 
     if (input === PASSWORD) {
-        localStorage.setItem("unlocked", "true");
         document.getElementById("lockScreen").style.display = "none";
         error.textContent = "";
         document.getElementById("passwordInput").value = "";
@@ -388,20 +317,7 @@ function checkPassword() {
     }
 }
 
-function lockAgain() {
-    localStorage.removeItem("unlocked");
-    location.reload();
-}
-
-window.addEventListener("load", () => {
-    if (localStorage.getItem("unlocked") === "true") {
-        document.getElementById("lockScreen").style.display = "none";
-    }
-});
-
-/* ================= GAME LOADER ================= */
-const volumeSlider = document.getElementById("volumeSlider");
-
+/* ========== GAME LOADER ========== */
 function loadGame(gameFile, element) {
     const frame = document.getElementById("gameFrame");
     frame.src = gameFile;
@@ -410,27 +326,23 @@ function loadGame(gameFile, element) {
     document.querySelectorAll(".game-link").forEach(game =>
         game.classList.remove("active")
     );
-    if (element) element.classList.add("active");
 
-    frame.onload = () => {
-        const volume = volumeSlider.value / 100;
-        setIframeVolume(volume);
-    };
+    if (element) element.classList.add("active");
 }
 
 /* Restore last game */
 window.addEventListener("load", () => {
     const lastGame = localStorage.getItem("activeGame");
-    if (!lastGame) return;
-
-    document.querySelectorAll(".game-link").forEach(game => {
-        if (game.getAttribute("onclick") && game.getAttribute("onclick").includes(lastGame)) {
-            loadGame(lastGame, game);
-        }
-    });
+    if (lastGame) {
+        document.querySelectorAll(".game-link").forEach(game => {
+            if (game.getAttribute("onclick").includes(lastGame)) {
+                loadGame(lastGame, game);
+            }
+        });
+    }
 });
 
-/* ================= SEARCH ================= */
+/* ========== LIVE SEARCH ========== */
 document.getElementById("searchBar").addEventListener("input", function () {
     const filter = this.value.toLowerCase();
     document.querySelectorAll(".game-link").forEach(game => {
@@ -440,38 +352,11 @@ document.getElementById("searchBar").addEventListener("input", function () {
     });
 });
 
-/* ================= FULLSCREEN ================= */
+/* ========== FULLSCREEN ========== */
 document.getElementById("fullscreenBtn").addEventListener("click", () => {
     const frame = document.getElementById("gameFrame");
     if (frame.requestFullscreen) frame.requestFullscreen();
 });
-
-/* ================= VOLUME SLIDER ================= */
-window.addEventListener("load", () => {
-    const savedVolume = localStorage.getItem("volume");
-    if (savedVolume !== null) {
-        volumeSlider.value = savedVolume;
-        setIframeVolume(savedVolume / 100);
-    }
-});
-
-volumeSlider.addEventListener("input", () => {
-    const volume = volumeSlider.value / 100;
-    localStorage.setItem("volume", volumeSlider.value);
-    setIframeVolume(volume);
-});
-
-function setIframeVolume(volume) {
-    const frame = document.getElementById("gameFrame");
-    try {
-        const audios = frame.contentWindow.document.getElementsByTagName("audio");
-        for (let audio of audios) {
-            audio.volume = volume;
-        }
-    } catch (e) {
-        console.warn("Cannot access iframe audio due to cross-origin restrictions");
-    }
-}
 </script>
 
 </body>
