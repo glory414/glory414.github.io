@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Game Portal</title>
+<title>WORK IN PROGRESS</title>
 
 <style>
 body {
@@ -14,7 +14,7 @@ body {
     color: #eee;
 }
 
-/* ========== LOCK SCREEN ========== */
+/* ================= LOCK SCREEN ================= */
 #lockScreen {
     position: fixed;
     inset: 0;
@@ -23,6 +23,10 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 9999;
+}
+    
+#lockBox * {
+    box-sizing: border-box;
 }
 
 #lockBox {
@@ -70,16 +74,18 @@ body {
     font-size: 14px;
 }
 
-/* ========== SIDEBAR ========== */
+/* ================= SIDEBAR ================= */
 #sidebar {
     width: 240px;
     height: 100vh;
     background-color: #181818;
+    color: white;
     padding: 20px;
     box-sizing: border-box;
     border-right: 2px solid #222;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 #sidebar h2 {
@@ -107,7 +113,10 @@ body {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s;
-    text-decoration: none;
+    user-select: none;
+    border: none;
+    width: 100%;
+    text-align: left;
 }
 
 .game-link:hover {
@@ -142,7 +151,7 @@ body {
     background-color: #333;
 }
 
-/* ========== CONTENT ========== */
+/* ================= CONTENT ================= */
 #content {
     flex-grow: 1;
     background-color: #121212;
@@ -159,7 +168,7 @@ iframe {
 
 <body>
 
-<!-- ========== LOCK SCREEN ========== -->
+<!-- ============ LOCK SCREEN ============ -->
 <div id="lockScreen">
     <div id="lockBox">
         <h2>Enter Password</h2>
@@ -169,12 +178,14 @@ iframe {
     </div>
 </div>
 
-<!-- ========== SIDEBAR ========== -->
+<!-- ============ SIDEBAR ============ -->
 <div id="sidebar">
     <h2>Made by Marcel</h2>
 
     <input type="text" id="searchBar" placeholder="Search games...">
+
     <button id="fullscreenBtn">Fullscreen</button>
+    <button id="fullscreenBtn" onclick="lockAgain()">Lock</button>
 
     <div id="gameList">
  <!-- A -->
@@ -301,9 +312,9 @@ iframe {
 </div>
 
 <script>
-const PASSWORD = "j0hn6789";
+/* ============ PASSWORD ============ */
+const PASSWORD = "j0hn6789"; // 🔴 CHANGE THIS
 
-/* ========== PASSWORD CHECK ========== */
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
     const error = document.getElementById("errorMsg");
@@ -317,7 +328,14 @@ function checkPassword() {
     }
 }
 
-/* ========== GAME LOADER ========== */
+
+function lockAgain() {
+    localStorage.removeItem("unlocked");
+    location.reload();
+}
+
+
+/* ============ GAME LOADER ============ */
 function loadGame(gameFile, element) {
     const frame = document.getElementById("gameFrame");
     frame.src = gameFile;
@@ -333,16 +351,16 @@ function loadGame(gameFile, element) {
 /* Restore last game */
 window.addEventListener("load", () => {
     const lastGame = localStorage.getItem("activeGame");
-    if (lastGame) {
-        document.querySelectorAll(".game-link").forEach(game => {
-            if (game.getAttribute("onclick").includes(lastGame)) {
-                loadGame(lastGame, game);
-            }
-        });
-    }
+    if (!lastGame) return;
+
+    document.querySelectorAll(".game-link").forEach(game => {
+        if (game.getAttribute("onclick").includes(lastGame)) {
+            loadGame(lastGame, game);
+        }
+    });
 });
 
-/* ========== LIVE SEARCH ========== */
+/* Live search */
 document.getElementById("searchBar").addEventListener("input", function () {
     const filter = this.value.toLowerCase();
     document.querySelectorAll(".game-link").forEach(game => {
@@ -352,7 +370,7 @@ document.getElementById("searchBar").addEventListener("input", function () {
     });
 });
 
-/* ========== FULLSCREEN ========== */
+/* Fullscreen */
 document.getElementById("fullscreenBtn").addEventListener("click", () => {
     const frame = document.getElementById("gameFrame");
     if (frame.requestFullscreen) frame.requestFullscreen();
