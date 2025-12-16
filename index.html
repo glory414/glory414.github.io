@@ -24,7 +24,7 @@ body {
     justify-content: center;
     z-index: 9999;
 }
-    
+
 #lockBox * {
     box-sizing: border-box;
 }
@@ -104,6 +104,73 @@ body {
     outline: none;
 }
 
+/* Sidebar controls */
+#sidebarControls {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+#sidebarControls button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #222;
+    color: #eee;
+    border: 2px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#sidebarControls button:hover {
+    background-color: #333;
+}
+
+/* Volume slider */
+.volume-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.volume-container label {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+#volumeSlider {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 5px;
+    background: #222;
+    outline: none;
+    cursor: pointer;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #00ff99;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #00ff99;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Game list */
 .game-link {
     display: block;
     padding: 12px;
@@ -134,21 +201,6 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     padding-right: 5px;
-}
-
-#fullscreenBtn {
-    background-color: #222;
-    color: #eee;
-    border: 2px solid #333;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#fullscreenBtn:hover {
-    background-color: #333;
 }
 
 /* ================= CONTENT ================= */
@@ -184,8 +236,15 @@ iframe {
 
     <input type="text" id="searchBar" placeholder="Search games...">
 
-    <button id="fullscreenBtn">Fullscreen</button>
-    <button id="fullscreenBtn" onclick="lockAgain()">Lock</button>
+    <div id="sidebarControls">
+        <button id="fullscreenBtn">Fullscreen</button>
+        <button id="lockBtn" onclick="lockAgain()">Lock</button>
+
+        <div class="volume-container">
+            <label for="volumeSlider">Volume</label>
+            <input type="range" id="volumeSlider" min="0" max="100" value="100">
+        </div>
+    </div>
 
     <div id="gameList">
  <!-- A -->
@@ -313,14 +372,14 @@ iframe {
 
 <script>
 /* ================= PASSWORD & LOCK SCREEN ================= */
-const PASSWORD = "j0hn6789"; // 🔴 CHANGE THIS
+const PASSWORD = "j0hn6789";
 
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
     const error = document.getElementById("errorMsg");
 
     if (input === PASSWORD) {
-        localStorage.setItem("unlocked", "true"); // persist unlock
+        localStorage.setItem("unlocked", "true");
         document.getElementById("lockScreen").style.display = "none";
         error.textContent = "";
         document.getElementById("passwordInput").value = "";
@@ -334,7 +393,6 @@ function lockAgain() {
     location.reload();
 }
 
-// Hide lock screen if already unlocked
 window.addEventListener("load", () => {
     if (localStorage.getItem("unlocked") === "true") {
         document.getElementById("lockScreen").style.display = "none";
@@ -349,20 +407,18 @@ function loadGame(gameFile, element) {
     frame.src = gameFile;
     localStorage.setItem("activeGame", gameFile);
 
-    // Highlight active game
     document.querySelectorAll(".game-link").forEach(game =>
         game.classList.remove("active")
     );
     if (element) element.classList.add("active");
 
-    // Set volume after iframe loads
     frame.onload = () => {
         const volume = volumeSlider.value / 100;
         setIframeVolume(volume);
     };
 }
 
-// Restore last game on page load
+/* Restore last game */
 window.addEventListener("load", () => {
     const lastGame = localStorage.getItem("activeGame");
     if (!lastGame) return;
@@ -391,7 +447,6 @@ document.getElementById("fullscreenBtn").addEventListener("click", () => {
 });
 
 /* ================= VOLUME SLIDER ================= */
-// Restore saved volume
 window.addEventListener("load", () => {
     const savedVolume = localStorage.getItem("volume");
     if (savedVolume !== null) {
@@ -400,14 +455,12 @@ window.addEventListener("load", () => {
     }
 });
 
-// Update volume when slider changes
 volumeSlider.addEventListener("input", () => {
     const volume = volumeSlider.value / 100;
     localStorage.setItem("volume", volumeSlider.value);
     setIframeVolume(volume);
 });
 
-// Function to set iframe audio volume
 function setIframeVolume(volume) {
     const frame = document.getElementById("gameFrame");
     try {
@@ -420,7 +473,6 @@ function setIframeVolume(volume) {
     }
 }
 </script>
-
 
 </body>
 </html>
