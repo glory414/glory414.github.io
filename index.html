@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>WORK IN PROGRESS</title>
-
 <style>
 body {
     margin: 0;
@@ -24,7 +23,7 @@ body {
     justify-content: center;
     z-index: 9999;
 }
-    
+
 #lockBox * {
     box-sizing: border-box;
 }
@@ -136,7 +135,7 @@ body {
     padding-right: 5px;
 }
 
-#fullscreenBtn {
+#fullscreenBtn, #lockBtn {
     background-color: #222;
     color: #eee;
     border: 2px solid #333;
@@ -147,7 +146,7 @@ body {
     font-weight: bold;
 }
 
-#fullscreenBtn:hover {
+#fullscreenBtn:hover, #lockBtn:hover {
     background-color: #333;
 }
 
@@ -173,7 +172,7 @@ iframe {
     <div id="lockBox">
         <h2>Enter Password</h2>
         <input type="password" id="passwordInput" placeholder="Password">
-        <button onclick="checkPassword()">Unlock</button>
+        <button type="button" onclick="checkPassword()">Unlock</button>
         <p id="errorMsg"></p>
     </div>
 </div>
@@ -184,8 +183,8 @@ iframe {
 
     <input type="text" id="searchBar" placeholder="Search games...">
 
-    <button id="fullscreenBtn">Fullscreen</button>
-    <button id="fullscreenBtn" onclick="lockAgain()">Lock</button>
+    <button id="fullscreenBtn" type="button">Fullscreen</button>
+    <button id="lockBtn" type="button" onclick="lockAgain()">Lock</button>
 
     <div id="gameList">
  <!-- A -->
@@ -313,7 +312,7 @@ iframe {
 
 <script>
 /* ============ PASSWORD ============ */
-const PASSWORD = "j0hn6789"; // 🔴 CHANGE THIS
+const PASSWORD = "j0hn6789"; // 🔴 Change password if needed
 
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
@@ -324,22 +323,18 @@ function checkPassword() {
         error.textContent = "";
         document.getElementById("passwordInput").value = "";
     } else {
-        error.textContent = "Email me at marcelm7344@gmail.com for any questions. You also got the password wrong.";
+        error.textContent = "Email me at marcelm7344@gmail.com for any questions. Wrong password!";
     }
 }
 
-
 function lockAgain() {
-    localStorage.removeItem("unlocked");
-    location.reload();
+    document.getElementById("lockScreen").style.display = "flex";
 }
-
 
 /* ============ GAME LOADER ============ */
 function loadGame(gameFile, element) {
     const frame = document.getElementById("gameFrame");
     frame.src = gameFile;
-    localStorage.setItem("activeGame", gameFile);
 
     document.querySelectorAll(".game-link").forEach(game =>
         game.classList.remove("active")
@@ -348,26 +343,22 @@ function loadGame(gameFile, element) {
     if (element) element.classList.add("active");
 }
 
-/* Restore last game */
+/* Restore last game on load */
 window.addEventListener("load", () => {
     const lastGame = localStorage.getItem("activeGame");
     if (!lastGame) return;
 
-    document.querySelectorAll(".game-link").forEach(game => {
-        if (game.getAttribute("onclick").includes(lastGame)) {
-            loadGame(lastGame, game);
-        }
-    });
+    const gameElement = document.querySelector(`.game-link[data-file="${lastGame}"]`);
+    if (gameElement) loadGame(lastGame, gameElement);
 });
 
 /* Live search */
 document.getElementById("searchBar").addEventListener("input", function () {
     const filter = this.value.toLowerCase();
     document.querySelectorAll(".game-link").forEach(game => {
-        game.style.display = game.textContent.toLowerCase().includes(filter)
-            ? "block"
-            : "none";
+        game.style.display = game.textContent.toLowerCase().includes(filter) ? "block" : "none";
     });
+    document.getElementById("gameList").scrollTop = 0;
 });
 
 /* Fullscreen */
@@ -379,3 +370,4 @@ document.getElementById("fullscreenBtn").addEventListener("click", () => {
 
 </body>
 </html>
+
